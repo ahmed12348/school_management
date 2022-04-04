@@ -12,10 +12,11 @@ class Student extends Model
 {
     use HasFactory;
     use Notifiable;
+    use SoftDeletes;
+
     public $fillable = ['id','name'];
 
     protected $dates = ['deleted_at'];
-
     public function schools()
     {
      return $this->belongsTo(School::class,'school_id')->withdefault();

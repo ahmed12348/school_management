@@ -129,8 +129,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
+
         $student = Student::find($id);
-        $school_id = $student->school_id;
         $student->delete();
 
     Session::flash('message', 'student deleted successfully');
@@ -163,7 +163,7 @@ class StudentController extends Controller
        //after deleting student
         //you should reorder other students in school by student.id
         //and regenerate order for each student
-
+        // $school_id = $student->school_id;
         // $studentsIds = DB::table("students")->select("id")->where("school_id","=",$school_id)->get()->toArray();
         // //dd($studentsIds);
         // $i=1;
