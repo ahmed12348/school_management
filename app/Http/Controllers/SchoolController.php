@@ -14,7 +14,10 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        //
+        $schools = School::limit(20)->orderBy("id")->paginate(20);
+
+        return view('schools.index',compact('schools'))
+        ->with('i', (request()->input('page', 1) - 1) * 200);
     }
 
     /**
@@ -24,7 +27,8 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('schools.create');
     }
 
     /**
@@ -35,7 +39,15 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $schools = request()->validate([
+            'name' => 'required',
+        ]);
+
+        $schools = new School();
+        $schools->name  = $request->name;
+
+        $schools->save();
+        return redirect()->route('schools.index')->with('success','School created successfully.');
     }
 
     /**
@@ -46,7 +58,7 @@ class SchoolController extends Controller
      */
     public function show(School $school)
     {
-        //
+        return view('schools.show',compact('school'));
     }
 
     /**
@@ -57,7 +69,7 @@ class SchoolController extends Controller
      */
     public function edit(School $school)
     {
-        //
+        return view('schools.edit',compact('school'));
     }
 
     /**
@@ -67,9 +79,18 @@ class SchoolController extends Controller
      * @param  \App\Models\School  $school
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, School $school)
+    public function update(Request $request, $id)
     {
-        //
+        $schools = request()->validate([
+            'name' => 'required',
+
+        ]);
+
+       $schools = School::findOrFail($id);
+       $schools->name = $request->name;
+       $schools->save();
+        return redirect()->route('schools.index')
+                        ->with('success','school updated successfully');
     }
 
     /**

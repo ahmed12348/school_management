@@ -50,11 +50,9 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-      ;
         $students = request()->validate([
             'name' => 'required',
             'school_id' => 'required',
-
         ]);
         $school_id= $request->school_id;
        $lastStudent =DB::table('students')
@@ -66,15 +64,11 @@ class StudentController extends Controller
         // $studentsCount= Student::where('students.school_id', '=' , $school_id)->count();
         // //$count = $studentsCount + 1;//1 2 3 =>2 =>count = 2 => 1 3 3
         // $new_orders=$studentsCount +1;
-
         $students = new Student();
         $students->name  = $request->name;
         $students->school_id= $request->school_id;
         $students->order=$new_orders;
-
-
         $students->save();
-
         return redirect()->route('students.index')->with('success','Student created successfully.');
 
     }
@@ -87,7 +81,8 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        return view('products.show',compact('product'));
+        $schools = School::select("name","id")->get()->pluck("name","id");
+        return view('students.show',compact('student','schools'));
     }
 
     /**
@@ -98,7 +93,8 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        return view('products.edit',compact('product'));
+        $school_id = School::orderBy('name', 'ASC')->pluck('name', 'id');
+        return view('students.edit',compact('student','school_id'));
     }
 
     /**
@@ -108,24 +104,21 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request,$id)
     {
-        request()->validate([
-            'title' => 'required',
-            'price' => 'required',
-            'stock' => 'required',
-
+        $students = request()->validate([
+            'name' => 'required',
+            'school_id' => 'required',
         ]);
 
-        $product->update($request->all());
-        if(isset($request->active)){
-            $product->active = $request->active;
-          }
+       $students = Student::findOrFail($id);
+       $students->name = $request->name;
+       $students->school_id = $request->school_id;
 
 
-       $product->save();
-        return redirect()->route('products.index')
-                        ->with('success','Product updated successfully');
+       $students->save();
+        return redirect()->route('students.index')
+                        ->with('success','student updated successfully');
     }
 
     /**
@@ -139,20 +132,7 @@ class StudentController extends Controller
         $student = Student::find($id);
         $school_id = $student->school_id;
         $student->delete();
-        //after deleting student
-        //you should reorder other students in school by student.id
-        //and regenerate order for each student
 
-        // $studentsIds = DB::table("students")->select("id")->where("school_id","=",$school_id)->get()->toArray();
-        // //dd($studentsIds);
-        // $i=1;
-        // foreach ($studentsIds as  $ids) {
-        //     //dd($ids->id);
-        //     $student2 = Student::find($ids->id);
-        //     $student2->order = $i++;
-        //     $student2->save();
-        // }
-        // return $this->sendNotification();
     Session::flash('message', 'student deleted successfully');
     return redirect()->route('students.index');
 
@@ -175,4 +155,23 @@ class StudentController extends Controller
         return redirect()->route('students.index');
 
     }
+
+
+
+
+
+       //after deleting student
+        //you should reorder other students in school by student.id
+        //and regenerate order for each student
+
+        // $studentsIds = DB::table("students")->select("id")->where("school_id","=",$school_id)->get()->toArray();
+        // //dd($studentsIds);
+        // $i=1;
+        // foreach ($studentsIds as  $ids) {
+        //     //dd($ids->id);
+        //     $student2 = Student::find($ids->id);
+        //     $student2->order = $i++;
+        //     $student2->save();
+        // }
+        // return $this->sendNotification();
 }

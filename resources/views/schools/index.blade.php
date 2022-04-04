@@ -26,19 +26,16 @@
     <table class="table table-bordered">
         <tr>
             <th>No</th>
-            <th>Title</th>
-            <th>Price</th>
+            <th>School Name</th>
 
-            <th>Stock</th>
             <th width="280px">Action</th>
         </tr>
 
 	    @foreach ($schools as $school)
 	    <tr>
 	        <td>{{ ++$i }}</td>
-	        <td>{{ $school->title }}</td>
-	        <td>{{ $school->price }}$</td>
-             <td>{{ $school->stock }}</td>
+	        <td>{{ $school->name }}</td>
+
 	        <td>
                 <form action="{{ route('schools.destroy',$school->id) }}" method="POST">
                     <a class="btn btn-info" href="{{ route('schools.show',$school->id) }}">Show</a>

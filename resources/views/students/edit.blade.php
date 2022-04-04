@@ -42,18 +42,12 @@
 		    <div class="col-xs-12 col-sm-12 col-md-12">
 		        <div class="form-group">
 		            <strong>student_ID:</strong>
-                    {!! Form::select('student_id[]', $student_id, $student->student_id, ['class' => 'form-control','id'=>'student_id','required'=>'required']) !!}
+                    {!! Form::select('school_id', $school_id, $student->school_id, ['class' => 'form-control','id'=>'school_id','required'=>'required']) !!}
                 		        </div>
 		    </div>
 
 
-		    <div class="col-xs-12 col-sm-12 col-md-12">
-		        <div class="form-group">
-		            <strong>Order:</strong>
 
-                    <input type="number" name="order" value="{{ $student->order }}" class="form-control" placeholder="order">
-                        </div>
-		    </div>
 
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 		      <button type="submit" class="btn btn-primary">Submit</button>
