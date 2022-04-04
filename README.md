@@ -8,7 +8,7 @@ this a school Management System That manage all student in all school
 - Run php artisan key:generate
 - Run php artisan migrate --seed (it has some seeded data for your testing)
 - {php artisan reorder:student 2}   this the fixed command line and (2) is an id of school.
-- 
+- when an admin run this command send email in mailtrap notification
   
 
 
