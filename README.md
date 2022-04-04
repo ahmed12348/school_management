@@ -2,12 +2,12 @@
 
 this a school Management System That manage all student in all school 
 
-•	Clone the repository with git clone
-•	Copy .env.example file to .env and edit database credentials there
-•	Run composer update
-•	Run php artisan key:generate
-•	Run php artisan migrate --seed (it has some seeded data for your testing)
--   
+- Clone the repository with git clone
+- Copy .env.example file to .env and edit database credentials there
+- Run composer update
+- Run php artisan key:generate
+- Run php artisan migrate --seed (it has some seeded data for your testing)
+  
 
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
